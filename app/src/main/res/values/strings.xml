@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">cursoAris</string>
+    <string name="male">hombre</string>
+    <string name="female">mujer</string>
+    <string name="height">altura</string>
+    <string name="age">edad</string>
+    <string name="wheight">peso</string>
+
 </resources>
