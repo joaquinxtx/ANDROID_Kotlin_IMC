@@ -5,5 +5,23 @@
     <string name="height">altura</string>
     <string name="age">edad</string>
     <string name="wheight">peso</string>
+    <string name="calculate">Calcular</string>
+    <string name="result">Resultado  I.M.C</string>
+    <string name="recalculate">re-calcular</string>
+
+    <string name="error">Error</string>
+
+    <string name="title_bajo_peso">Bajo peso</string>
+    <string name="description_bajo_peso">Estas por debajo de lo optimo para tu peso y altura.</string>
+
+    <string name="title_normal_peso">Peso normal</string>
+    <string name="description_normal_peso">Estas en lo optimo para tu peso y altura.</string>
+
+    <string name="title_sobrepeso">Sobrepesol</string>
+    <string name="description_sobrepeso">Estas por encima de lo optimo para tu peso y altura.</string>
+
+    <string name="title_obesidad">obesidad</string>
+    <string name="description_obesidad">Estas muy por encima de lo optimo para tu peso y altura.</string>
+
 
 </resources>
