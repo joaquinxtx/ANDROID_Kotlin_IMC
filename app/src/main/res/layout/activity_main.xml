@@ -7,8 +7,33 @@
     android:layout_height="match_parent"
     android:background="@color/background_app"
     android:paddingHorizontal="16dp"
-    android:paddingVertical="32dp"
+    android:paddingVertical="22dp"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|end"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/viewFemale"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_dark_mode_24"
+            android:tint="@color/dark_mode"
+            />
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchDarkMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp" />
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/viewMale"
@@ -17,6 +42,7 @@
         android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/background_component_selected"
         app:cardCornerRadius="16dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toStartOf="@+id/viewFemale"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -48,6 +74,7 @@
         android:id="@+id/viewFemale"
         android:layout_width="0dp"
         android:layout_height="150dp"
+        android:layout_marginTop="32dp"
         app:cardBackgroundColor="@color/background_component"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +107,7 @@
         android:id="@+id/viewHeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         app:cardBackgroundColor="@color/background_component"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +143,8 @@
                 android:layout_height="wrap_content"
                 android:stepSize="1"
                 android:valueFrom="120"
-                android:valueTo="210" />
+                android:valueTo="210"
+                android:backgroundTint="@color/purple_500"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -126,7 +154,7 @@
         android:id="@+id/viewWeight"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/background_component"
         app:cardCornerRadius="16dp"
@@ -193,7 +221,7 @@
         android:id="@+id/viewAge"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         app:cardBackgroundColor="@color/background_component"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"

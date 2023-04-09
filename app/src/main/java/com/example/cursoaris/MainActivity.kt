@@ -7,13 +7,29 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.slider.RangeSlider
+import com.google.android.material.switchmaterial.SwitchMaterial
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
-
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class MainActivity : AppCompatActivity() {
+
+
+
     private var isMaleSelected:Boolean=true
     private var isFemaleSelected:Boolean=false
     private var currentWeight:Int=70
@@ -32,8 +48,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvAge:TextView
     private lateinit var btnCalculate:Button
 
+    private lateinit var switchDarkMode: SwitchMaterial
+
+    private var firstTime: Boolean = true
+
     companion object{
         const val IMC_KEY = "IMC_RESULT"
+        const val KEY_DARK_MODE = "key_dark_mode"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +62,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initComponents()
         initListeners()
+        CoroutineScope(Dispatchers.IO).launch {
+            getSettings().filter { firstTime }.collect { settingsModel ->
+                if (settingsModel != null) {
+                    runOnUiThread {
+                        switchDarkMode.isChecked = settingsModel.darkMode
+                        firstTime = !firstTime
+                    }
+                }
+
+            }
+
+        }
         initUI()
+
     }
 
 
@@ -58,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         btnPlusAge=findViewById(R.id.btnPlusAge)
         tvAge=findViewById(R.id.tvAge)
         btnCalculate=findViewById(R.id.btnCalculate)
+        switchDarkMode = findViewById(R.id.switchDarkMode)
     }
     private fun initListeners() {
         viewMale.setOnClickListener{
@@ -143,5 +178,40 @@ class MainActivity : AppCompatActivity() {
         setGenderColor()
         setWeight()
         setAge()
+        switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                enableDarkMode()
+            } else {
+                disableDarkMode()
+            }
+            CoroutineScope(Dispatchers.IO).launch {
+                saveOptions(KEY_DARK_MODE, isChecked)
+
+            }
+        }
+    }
+    private suspend fun saveOptions(key: String, value: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(key)] = value
+        }
+    }
+
+    private fun getSettings(): Flow<SettingsModel> {
+        return dataStore.data.map { preferences ->
+            SettingsModel(
+                darkMode = preferences[booleanPreferencesKey(KEY_DARK_MODE)] ?: true
+            )
+
+        }
+    }
+
+    private fun disableDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        delegate.applyDayNight()
+    }
+
+    private fun enableDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        delegate.applyDayNight()
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_500">#FF065D</color>
+    <color name="background_component">#101e33</color>
+    <color name="dark_mode">#F6F5F5</color>
+    <color name="background_component_selected">#FF101328</color>
+    <color name="background_app">#0E0b20</color>
+    <color name="background_button">#EB1555</color>
+    <color name="title_text">#FF8D8E98</color>
+</resources>
